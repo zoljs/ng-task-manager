@@ -1,27 +1,33 @@
-# Essentials
+# ng-task-manager
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.1.2.
+A task management application built with Angular 18 while following Maximilian Schwarzmuller's [The Complete Guide to Angular](https://www.udemy.com/course/the-complete-guide-to-angular-2/) on Udemy.
 
-## Development server
+## What I learned building this
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+### Angular module system
 
-## Code scaffolding
+The project uses NgModule-based architecture. I learned how to split an app into feature modules (`TasksModule`) and shared modules (`SharedModule`), and why `BrowserModule` belongs only in `AppModule` while feature modules use `CommonModule`. Scoping `FormsModule` to only the modules that need it was a non-obvious but important detail.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+### Component communication with @Input and @Output
 
-## Build
+`@Input` passes data down the tree; `@Output` with `EventEmitter` bubbles events back up. The `required: true` option on `@Input` gives a compile-time error if a parent forgets to pass a value.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+### Service injection and singletons
 
-## Running unit tests
+`TasksService` uses `@Injectable({ providedIn: 'root' })`, making it a singleton. I also learned both injection styles Angular supports: constructor injection and the `inject()` function.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### Template-driven forms and localStorage
 
-## Running end-to-end tests
+`[(ngModel)]` two-way binding handles form state, with `(ngSubmit)` wiring up submission. The service persists tasks to `localStorage` on every mutation and rehydrates from it in the constructor, so data survives a page refresh without a backend.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+### New control flow syntax
 
-## Further help
+Angular 17's `@if` and `@for` replace `*ngIf` and `*ngFor`. The `track` expression in `@for` is mandatory.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## Stack
+
+- Angular 18 (NgModule, not standalone - though the entire project started out as standalone modules)
+- TypeScript
+- Angular Forms
+- localStorage for persistence
+- Bun
